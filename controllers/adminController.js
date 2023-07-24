@@ -93,3 +93,66 @@ exports.dashboard= asyncHandler(async function(req,res){
     res.send("welcome")
 });
 
+exports.change_password_get= asyncHandler(async function(req,res){
+    const user=await Admin.findById(req.session.userid);
+    //assuming user exists as authentication on the route will check it
+    res.render('admin_password_change',{user});
+});
+
+exports.change_password_post= [
+    body("password")
+	.trim()
+	.isLength({min: 8})
+	.escape()
+	.withMessage("Password must have minimum 8 characters"),
+    body("confirm")
+	.trim()
+	.isLength({min: 8})
+	.escape()
+	.withMessage("Password must have minimum 8 characters"),
+    asyncHandler(async (req,res,next)=>{
+	const errors= validationResult(req);
+
+	const user=await Admin.findById(req.body.userid);
+	
+	if(!errors.isEmpty())
+	{
+	    //validation error
+	    res.render("admin_password_change", {
+		user,
+		errors: errors.array()
+	    });
+	    return;
+	}
+	else
+	{
+	    if(!user)
+	    {
+		//user does not exist
+		console.log('Change password: given user does not exist');
+		//control should not reach here, redirect to login in case
+		res.redirect('login');
+		return;
+	    }
+	    else
+	    {
+		if(!(req.body.password===req.body.confirm))
+		{
+		    //mismatch
+		    res.render("admin_password_change", {
+			user,
+			errors: [{msg: "The two passwords do not match!"}]
+		    });
+		    return;
+		}
+		else
+		{
+		    // verified
+		    user.password= req.body.password;
+		    await user.save();
+		    res.redirect('dashboard');
+		}
+	    }
+	}
+    })
+];    

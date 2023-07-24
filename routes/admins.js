@@ -19,5 +19,7 @@ router.get('/dashboard', adminController.dashboard);
 
 router.get('/logout', adminController.logout);
 
+router.get('/changePassword', adminController.change_password_get);
+router.post('/changePassword', adminController.change_password_post);
 
 module.exports=router;
