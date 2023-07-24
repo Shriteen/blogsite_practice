@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose= require('mongoose');
+mongoose.set('strictQuery',false);
+const mongodb='mongodb://127.0.0.1/blogsite';
+
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -35,5 +39,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+main().catch(err=> console.log(err));
+
+async function main()
+{
+    await mongoose.connect(mongodb);
+}
 
 module.exports = app;
