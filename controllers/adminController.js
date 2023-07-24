@@ -15,6 +15,14 @@ exports.loginRedirect= function(err,req,res,next){
     res.redirect("/admin/login");
 };
 
+// prevents login page being visited while logged in
+exports.alreadyLoggedIn= function(req,res,next){
+    if(req.session.userid)
+	res.redirect('dashboard');
+    else
+	next();
+};
+
 
 exports.login_get=asyncHandler(async function(req,res){
     res.render('admin_login');
