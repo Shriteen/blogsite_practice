@@ -88,11 +88,6 @@ exports.logout= asyncHandler(function(req,res,next) {
     res.redirect("login");
 });
 
-exports.dashboard= asyncHandler(async function(req,res){
-    // res.render('admin_login');
-    res.send("welcome")
-});
-
 exports.change_password_get= asyncHandler(async function(req,res){
     const user=await Admin.findById(req.session.userid);
     //assuming user exists as authentication on the route will check it
