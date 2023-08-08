@@ -1,0 +1,14 @@
+//- Required args
+  post : post object
+  content: post.content parsed into html
+
+doctype html
+html(lang="en")
+  head
+    title= post.title
+    meta(charset="utf-8")
+    meta(name="viewport",content="width=device-width,initial-scale=1")
+
+  body
+    h1= "TEMPORARY: "+post.title
+    |!{content}

@@ -14,7 +14,8 @@ const mongodb='mongodb://127.0.0.1/blogsite';
 
 
 var indexRouter = require('./routes/index');
-const adminRouter = require('./routes/admins')
+const adminRouter = require('./routes/admins');
+const postRouter = require('./routes/posts');
 
 var app = express();
 
@@ -41,10 +42,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
-
-
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
+app.use('/posts', postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
