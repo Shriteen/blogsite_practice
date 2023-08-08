@@ -1,0 +1,61 @@
+header{
+    margin-bottom: 1em;
+}
+
+header ul{
+    /* Normalise list style */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 1.2rem;
+    background-color: #eee;
+    padding: 0.4em;
+}
+
+header input {
+    appearance: none;
+    border: none;
+    font-size: 0.85em;
+    padding-left: 6px;
+    
+    background-color: #ddd;
+    border-radius: 0.5em;
+    height: 2.3em;
+}
+
+#title{
+    width: 25em;
+}
+
+label+input{
+    margin-left: 0.8em;
+}
+
+#submitBtn{
+    appearance: none;
+    font-size: 1em;
+    border: none;
+    
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    padding: 0.5em 1em;
+    background-color: #3377ff;
+    color: white;
+    z-index: 10000;		/*to fix editorjs fields preventing clicks from being reached to button*/
+}
+
+.cdx-block{
+    background-color: #f7f7f7;
+    /* border: 1px solid #eee; */
+    border-radius: 10px;
+}
+.ce-block+.ce-block{
+    margin-top: 2px;
+}

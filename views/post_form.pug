@@ -1,0 +1,77 @@
+//- Required args
+  allAuthors : Array of author objects
+  title: Title of page
+//- Optional args
+  post : post object
+  author: author name to be used if post unavailable
+  oldData: editorjs json data as object to be prefilled in editorjs
+  errors : array of Error objects
+
+doctype html
+html(lang="en")
+  head
+    title= title
+    meta(charset="utf-8")
+    meta(name="viewport",content="width=device-width,initial-scale=1")
+    link(href="/stylesheets/post_form.css", rel="stylesheet")
+
+    script(defer).
+      //- import editorjs from '/javascripts/editorjs-wrapper.js';
+      import('/javascripts/editorjs-wrapper.js').then((module)=>{
+          const editorjs=module.default;
+          let oldData;
+          //same script will handle whether or not old data is provided
+          if(document.getElementById('oldData'))
+              oldData= JSON.parse(document.getElementById('oldData').text);
+          else
+              oldData=undefined;
+          const editor= editorjs('postForm','editorDiv',oldData);
+      });
+
+    if oldData!==undefined
+      script#oldData(type="application/json") !{JSON.stringify(oldData)}
+  body
+    form(method="POST" id="postForm")
+      header
+        ul
+          li
+            a(href="/admin/dashboard") Back
+
+          li
+            label(for="title") Title
+            input#title(
+                name="title",
+                placeholder="Give an Eye Catching Title",
+                required="true",
+                value=(undefined===post?"":post.title)
+              )
+
+          li
+            label(for="author") Author
+            input#author(
+                name="author",
+                placeholder="Written by",
+                required="true",
+                value=(post!==undefined?post.author.name:(author!==undefined?author:"")),
+                list="authorList"
+              )
+              //-
+                Use author from post if post is available (in update case), 
+                Else use author variable if provided (likely username of admin while creating)
+                Empty as last resort
+              //-
+                 The above comment should be near value attribute but pug was giving errors with no reason.
+                 Probably due to bug in parsing. It was giving error inside comment 🫠
+            datalist#authorList
+              each author in allAuthors
+                option(value=author.name)
+
+      div#errorList
+        if errors
+          ul
+            for error in errors
+              li=error.msg
+
+      div#editorDiv
+
+      button#submitBtn(type="submit") Publish
