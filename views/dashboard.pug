@@ -1,9 +1,45 @@
-p Welcome (temporary view)
-br
-a(href='./logout') Logout
-br
-a(href='./changePassword') Change Password
-br
-a(href='./createPost') Create Post
+//- Required args
+  admin : Username of admin
 
+doctype html
+html(lang="en")
+  head
+    title Dashboard
+    meta(charset="utf-8")
+    meta(name="viewport",content="width=device-width,initial-scale=1")
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+         rel="stylesheet")
+    link(href="/stylesheets/dashboard.css", rel="stylesheet")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" defer="true")
+    script(src="/javascripts/dashboard.js" defer)
+  body
+    ul.nav.nav-tabs.nav-justified
+      //- .nav-justified
+      li.nav-item.active
+        a.nav-link.active(data-bs-toggle="tab",
+          data-bs-target="#postManage",
+          href="#postManage")
+            Manage Posts
+      li.nav-item
+        a.nav-link(data-bs-toggle="tab",
+          data-bs-target="#accManage",
+          href="#accManage")
+            Manage Account
 
+    div.tab-content
+      div.tab-pane.show.fade.in.active#postManage
+        div#welcomeBanner
+          h1 Welcome 
+            span#welcomeBannerAdminName #{admin}
+          a.mybutton#createPostBtn(href='./createPost') Create Post
+
+        div#manager
+          input#searchField(type="search",placeholder="search for title or id ")
+          ul#postList
+
+      div.tab-pane.fade#accManage
+        ul
+          li
+            a.mybutton(href='./logout') Logout
+          li
+            a.mybutton(href='./changePassword') Change Password

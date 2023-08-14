@@ -6,7 +6,10 @@ const Admin = require('../models/adminModel.js');
 const Post = require('../models/postModel.js');
 
 exports.dashboard= asyncHandler(async function(req,res){
-    res.render('dashboard');
+    const admin=await Admin.findById(req.session.userid).exec();
+    res.render('dashboard',{
+	admin: admin.username
+    });
 });
 
 exports.createPost= asyncHandler(async function(req,res){
