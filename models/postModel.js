@@ -25,7 +25,10 @@ const PostSchema= new Schema(
 	timestamps: {
 	    createdAt: "createdOn",
 	    updatedAt: "lastEditedOn"
-	}
+	},
+	toJSON: { virtuals: true }, // include virtual properties when converted to string
+	id: false		    // do not include id virtual property (clone of _id)
+	                            // (was getting redundant in JSON as virtuals are included)
     }
 );
 
