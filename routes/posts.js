@@ -7,5 +7,6 @@ const postController= require('../controllers/postController');
 
 router.get('/:postId([a-f0-9]{24})', postController.showPost );
 
+router.get('/search', postController.getPostAPI);
 
 module.exports=router;
