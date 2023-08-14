@@ -167,3 +167,9 @@ exports.editPostHandle= [
 	    res.sendStatus(404);
     })
 ];
+
+exports.deletePost= asyncHandler(async function(req,res){
+    //Make sure given post is deleted, ignore if post does not exist
+    const post= await Post.findByIdAndRemove(req.params.postId);
+    res.redirect('back');
+});

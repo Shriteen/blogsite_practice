@@ -47,6 +47,7 @@ router.use('/editPost', editorjsImageHandler);
 router.get('/editPost/:postId([a-f0-9]{24})', dashboardController.editPost);
 router.post('/editPost/:postId([a-f0-9]{24})',editorjsParseStringToObject,
  	                                      dashboardController.editPostHandle );
+router.get('/deletePost/:postId([a-f0-9]{24})', dashboardController.deletePost);
 
 
 
