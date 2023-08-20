@@ -1,0 +1,62 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+}
+
+img{
+    max-width: 100%;
+}
+
+header{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    padding: 10px;
+    background-color: rgb(132,255,157);
+    box-shadow: 0 5px 5px #e0e0e0;
+}
+
+#titleBanner{
+    flex: 1;
+    
+    /* Temporary banner */
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: #6b90d7;
+    text-shadow: 2px 1px 1px #0ff;
+}
+
+header a{
+    text-decoration: none;
+    color: inherit;
+}
+
+nav ul{
+    list-style-type: none;
+    margin: 0 1em;
+    padding: 0;
+}
+
+nav a{
+    font-weight: 700;
+    text-decoration: none;
+    color: #555;
+}
+
+nav a:focus,
+nav a:hover{
+    text-decoration: underline 4px;
+}
+
+#searchDiv input{
+    appearance: none;
+    border: none;
+    border-radius: 0.6em;
+    font-size: 1rem;
+    padding: 0.5em;
+}
+
+#searchDiv{
+    margin: auto;
+}

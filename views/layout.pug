@@ -1,0 +1,36 @@
+//- Required args
+  title: Title of tab
+
+doctype html
+html(lang="en")
+  head
+    title= title
+    meta(charset="utf-8")
+    meta(name="viewport",content="width=device-width,initial-scale=1")
+    link(href="/stylesheets/commonStyle.css", rel="stylesheet")
+
+    block headContent
+  body
+    header
+      div#titleBanner
+        a(href="/") BlogSite
+      nav
+        ul
+          li
+            a(href="/") Home
+      div#searchDiv
+        form(action="/posts/searchPage",method="GET")
+          input(type="search",placeholder="Search for posts",name="q")
+
+    block bodyContent
+
+
+
+
+
+
+
+
+
+
+
