@@ -1,14 +1,35 @@
 //- Required args
   post : post object
   content: post.content parsed into html
+  recentPosts: array of recent 10 posts (title and url needed)
+//- derived args (required)
+  title: Title of tab
 
-doctype html
-html(lang="en")
-  head
-    title= post.title
-    meta(charset="utf-8")
-    meta(name="viewport",content="width=device-width,initial-scale=1")
+extends layout
 
-  body
-    h1= "TEMPORARY: "+post.title
-    |!{content}
+block headContent
+  link(href="/stylesheets/postStyle.css", rel="stylesheet")
+  script(src='/javascripts/post.js' defer)
+
+block bodyContent
+  aside.sidebar
+    ul
+      each postObj in recentPosts
+        li
+          a(href=postObj.url) #{postObj.title}
+
+  main
+    article
+      div#heading
+        h1= post.title
+        div#articleDetails
+          span By
+            span#authorName  #{post.author.name}
+          span#articleDate #{post.createdOnHumanReadable}
+            if post.createdOnHumanReadable!==post.lastEditedOnHumanReadable
+              |  (Last updated: #{post.lastEditedOnHumanReadable})
+      hr
+      div#content
+        |!{content}
+
+

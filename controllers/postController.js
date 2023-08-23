@@ -9,10 +9,18 @@ const Author= require('../models/authorModel.js');
 // Creation and editing of post is admin activity and is present in dashboard controller
 
 exports.showPost= asyncHandler(async function(req,res){
-    const post= await Post.findById(req.params.postId);
+    const [post, allPosts]= await Promise.all([
+	(Post.findById(req.params.postId)).populate('author'),
+	//except current post
+	Post.find({_id: {$ne: req.params.postId} },"title")
+	    .sort({createdOn: -1})
+	    .limit(10).exec()
+    ]);
 
     if(post) {
 	res.render("post",{
+	    title: post.title,
+	    recentPosts: allPosts, 
 	    post,
 	    content: editorjsParseToHtml(post.content)
 	});
