@@ -67,6 +67,7 @@ main().catch(err=> console.log(err));
 async function main()
 {
     await mongoose.connect(mongodb);
+    console.log("Server started successfully!");
 }
 
 module.exports = app;
