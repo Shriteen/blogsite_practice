@@ -1,0 +1,49 @@
+//- Required args
+  results : array of results
+  query : query object with passed parameters
+  allAuthors: array of authors
+//- derived args (required)
+  title: Title of tab
+
+
+extends layout
+
+block headContent
+  link(href="/stylesheets/postListStyle.css",rel="stylesheet")
+  link(href="/stylesheets/searchPage.css",rel="stylesheet")
+
+block bodyContent
+  main
+    form#searchForm
+      ul
+        li#searchBar
+          input(type="search",placeholder="Search for posts",name="q",value=query.q, autofocus)
+          button(type="submit") Search
+        fieldset#searchFilters
+          li
+            label(for="author") Author
+            select#author(name="author")
+              option(value="") Any
+              each author in allAuthors
+                option(value=author.name,
+                  selected=(author.name===query.author)?true:false
+                )=author.name
+          li
+            label(for="fromDate") From Date
+            input#fromDate(type="date",name="fromDate",value=query.fromDate)
+          li
+            label(for="toDate") To Date
+            input#toDate(type="date",name="toDate",value=query.toDate)
+
+    div#postList
+      if(results.length)
+        ul
+          each post in results
+            li
+              a(href=post.url)
+                div.postTitle=post.title
+                div.postMetadata
+                  div.postAuthor=post.author.name
+                  div.postDate=post.createdOnHumanReadable
+      else
+        div No results found!

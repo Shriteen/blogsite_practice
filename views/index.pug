@@ -1,3 +1,25 @@
-block content
-  h1= title
-  p Welcome to #{title}
+//- Required args
+  allPosts : array of post objects
+//- derived args (required)
+  title: Title of tab
+
+
+extends layout
+
+block headContent
+  link(href="/stylesheets/postListStyle.css",rel="stylesheet")
+
+block bodyContent
+  main
+    div#heroBanner
+      h1 Welcome to Blog
+    div#postList
+      h2 Recent Posts
+      ul
+        each post in allPosts
+          li
+            a(href=post.url)
+              div.postTitle=post.title
+              div.postMetadata
+                div.postAuthor=post.author.name
+                div.postDate=post.createdOnHumanReadable

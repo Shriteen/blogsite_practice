@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
+var uest = require('uest');
 
 const mongoose= require('mongoose');
 mongoose.set('strictQuery',false);
@@ -41,6 +42,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
+app.use(uest());
 
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);

@@ -22,7 +22,8 @@
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
     "pug": "2.0.0-beta11",
-    "readline-sync": "^1.4.10"
+    "readline-sync": "^1.4.10",
+    "uest": "^1.0.20"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
