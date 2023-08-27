@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
 const asyncHandler = require('express-async-handler');
+const {body, validationResult} = require('express-validator');
 
 const editorjsParseToHtml = require('../modules/editorjs-parse-to-html.js');
 
@@ -100,3 +101,38 @@ exports.getPostAPI= asyncHandler(async function(req,res){
     
     res.send(results);
 });
+
+
+exports.addComment= [
+    body("commentorName")
+	.trim()
+	.isLength({min: 1})
+	.escape()
+	.withMessage("Commentor name must be specified"),
+    body("commentContent")
+	.trim()
+	.isLength({min: 1})
+	.escape()
+	.withMessage("Comment must be specified"),    
+    asyncHandler(async (req,res)=>{
+
+	// since there are checks on frontend side and comment is not something very important we can just silently ignore error 🙂
+	const errors= validationResult(req);
+	if(errors.isEmpty())
+	{
+	    await Post.findByIdAndUpdate(
+		req.params.postId, {
+		    $push: {
+			comments: {
+			    commentorName: req.body.commentorName,
+			    commentContent: req.body.commentContent,
+			    commentTimestamp: (new Date()).toISOString()
+			}
+		    }
+		}
+	    );
+	}
+	
+	res.redirect("/posts/"+req.params.postId);
+    })
+];

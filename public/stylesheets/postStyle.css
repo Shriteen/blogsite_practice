@@ -73,7 +73,8 @@ aside{
 
 }
 
-article{
+article,
+#commentSection{
     max-width: 50em;
     margin: auto;
     padding: 0 1em;
@@ -158,4 +159,62 @@ hr{
     h1{
 	font-size: 3em;
     }
+}
+
+
+#commentSection{
+    background-color: #eee;
+    border-top: 3px solid #6b90d7;
+    margin-top: 3em;
+}
+
+#commentSection ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+#addCommentForm{
+    border-bottom: 2px solid #6b90d7;
+}
+
+#addCommentForm :is(input,textarea,button) {
+    appearance: none;
+    margin: 5px 0px;
+    border: none;
+    border-radius: 5px;
+    resize: none;
+    font-size: 1em;
+    padding: 0.4em;
+}
+
+#addCommentForm button{
+    background-color: #6b90d7;
+    color: white;
+    cursor: pointer;
+}
+
+#addCommentForm textarea{
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 5em;
+}
+
+ul#commentList{
+    padding: 0.5em 0;
+    margin: 0;
+}
+
+.commentItem {
+    padding: 0.5em;
+    margin: 0.5em 0;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+.commentItem .commentorName::after{
+    content: " ▸";
+}
+
+.commentItem .commentorName{
+    color: #6b90d7;
 }

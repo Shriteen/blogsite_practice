@@ -32,4 +32,19 @@ block bodyContent
       div#content
         |!{content}
 
+    div#commentSection
+      form#addCommentForm(action=post.url+"/comment",method="POST")
+        ul
+          li
+            input#commentorName(type="text", name="commentorName", placeholder="Enter name", required)
+          li
+            textarea#commentContent(type="text", name="commentContent", placeholder="Mention your thoughts..", required)
+          li
+            button(type="submit") Add Comment
+      ul#commentList
+        //- since comments are added using $push, newer are always at end; hence no sorting needed
+        each comment in post.comments
+          li.commentItem
+            span.commentorName #{comment.commentorName}
+            |  #{comment.commentContent}
 

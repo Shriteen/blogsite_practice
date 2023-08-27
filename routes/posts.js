@@ -9,6 +9,8 @@ const generalController= require('../controllers/generalController');
 
 router.get('/:postId([a-f0-9]{24})', postController.showPost );
 
+router.post('/:postId([a-f0-9]{24})/comment', postController.addComment );
+
 router.get('/search', postController.getPostAPI);
 
 router.get('/searchPage', generalController.searchPage);
