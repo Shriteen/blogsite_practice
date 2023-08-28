@@ -1,0 +1,31 @@
+body{
+    font-family: sans-serif;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    max-width: 30em;
+    margin: 5em auto;
+}
+
+label{
+    margin-bottom: 0.33em;
+}
+
+input,button{
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    padding: 0.3em;
+    border-radius: 10px;
+    border: 1px solid #333;
+    
+}
+
+button{
+    align-self: center;
+    background-color: #0064ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
