@@ -1,0 +1,14 @@
+#heroBanner{
+    background: rgb(202,245,232);
+    background: linear-gradient(0deg, rgba(202,245,232,1) 54%, rgba(132,255,157,1) 100%); 
+    color: #6b90d7;
+    border-radius: 0 0 2em 2em;
+    height: 50vh;
+    padding: 3rem 1rem;
+    font-size: 2em;
+    text-align: center;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
