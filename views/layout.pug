@@ -13,7 +13,12 @@ html(lang="en")
   body
     header
       div#titleBanner
-        a(href="/") BlogSite
+        a#logoLink(href="/")
+          picture
+            source(media="(max-width: 599px)",srcset="/assets/logo-compact.svg")
+            source(media="(min-width: 600px)",srcset="/assets/logo.svg")
+            img#logoImg(src="/assets/logo.svg")
+
       nav
         ul
           li

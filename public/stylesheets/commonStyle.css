@@ -27,6 +27,11 @@ header{
     text-shadow: 2px 1px 1px #0ff;
 }
 
+#titleBanner #logoImg{
+    display: block;
+    height: 1.5em;
+}
+
 header a{
     text-decoration: none;
     color: inherit;
