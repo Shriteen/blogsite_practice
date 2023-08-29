@@ -60,6 +60,8 @@ nav a:hover{
     border-radius: 0.6em;
     font-size: 1rem;
     padding: 0.5em;
+
+    background: url('/assets/search_icon.svg') center right 5% / 1.25em no-repeat ,white;
 }
 
 #searchDiv{

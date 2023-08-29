@@ -1,3 +1,8 @@
+@font-face {
+  font-family: genericons-neue;
+  src: url('/fonts/Genericons-Neue.woff2');
+}
+
 #searchForm{
     max-width: 40em;
     margin: auto;
@@ -31,6 +36,12 @@
     background-color: #6b90d7;
     color: white;
     cursor: pointer;
+    padding: 0.5em 0.75em;
+}
+#searchBar>button[type='submit']::after{
+    font-family: genericons-neue;
+    content:"\f400";
+    font-size: 2em;
 }
 
 #searchFilters{
