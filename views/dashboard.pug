@@ -25,6 +25,10 @@ html(lang="en")
           data-bs-target="#accManage",
           href="#accManage")
             Manage Account
+      li.nav-item
+        a.nav-link(data-bs-toggle="tab",
+          data-bs-target="#credits",
+          href="#credits") Credits
 
     div.tab-content
       div.tab-pane.show.fade.in.active#postManage
@@ -43,3 +47,7 @@ html(lang="en")
             a.mybutton(href='./logout') Logout
           li
             a.mybutton(href='./changePassword') Change Password
+
+      div.tab-pane.fade#credits
+        ul
+          
