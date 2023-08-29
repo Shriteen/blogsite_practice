@@ -31,6 +31,7 @@ function populateList(arr)
 
 	const edit=document.createElement('div');
 	edit.classList.add('postListEdit');
+	edit.classList.add('mybutton');
 	const editLink= document.createElement('a');
 	editLink.textContent="Edit";
 	editLink.href="/admin/editPost/"+post._id;
@@ -39,6 +40,7 @@ function populateList(arr)
 	
 	const del=document.createElement('div');
 	del.classList.add('postListDelete');
+	del.classList.add('mybutton');
 	const delLink= document.createElement('a');
 	delLink.textContent="Delete";
 	delLink.href="/admin/deletePost/"+post._id;

@@ -1,5 +1,11 @@
+@font-face {
+  font-family: genericons-neue;
+  src: url('/fonts/Genericons-Neue.woff2');
+}
+
 header{
     margin-bottom: 1em;
+    font-family: sans-serif;
 }
 
 header ul{
@@ -29,6 +35,18 @@ header input {
     height: 2.3em;
 }
 
+.backBtn a::before{
+    font-family: genericons-neue;
+    content: "\f430";    
+}
+.backBtn a{
+    color: #3377ff;
+    text-decoration: none;
+}
+.backBtn a:hover{
+    text-decoration: underline;
+}
+
 #title{
     width: 25em;
 }
@@ -49,6 +67,11 @@ label+input{
     background-color: #3377ff;
     color: white;
     z-index: 10000;		/*to fix editorjs fields preventing clicks from being reached to button*/
+    transition: 0.5s cubic-bezier(.22,.61,.36,1);
+}
+
+#submitBtn:hover{
+    scale: 1.25;
 }
 
 .cdx-block{

@@ -1,11 +1,28 @@
+@font-face {
+  font-family: genericons-neue;
+  src: url('/fonts/Genericons-Neue.woff2');
+}
+
 .mybutton{
     background-color: #0d6efd;
     color: white;
     font-weight: bold;
     text-decoration: none;
     padding: 0.4em;
+    border: 1px solid #0d6efd;
     border-radius: 0.4em;
     margin: 0.3em;
+}
+
+.mybutton:hover,
+.mybutton:focus{
+    color: #0d6efd;
+    background-color: white;
+}
+
+.mybutton:is(.postListEdit,.postListDelete) a{
+    padding: 0.2em;
+    color: inherit;
 }
 
 /* ======================================== */
@@ -46,6 +63,7 @@
 
 #postList{
     padding: 0;
+    margin: 1em 0;
 }
 
 #postList li{
@@ -58,6 +76,16 @@
     margin: 0.2em;
 }
 
+#postList li a{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+#postList li a:hover{
+    text-decoration: underline;
+}
+
 .postListTitle{
     flex: 3;
 }
@@ -67,9 +95,22 @@
     flex: 1;
 }
 
+.postListEdit::before{
+    font-family: genericons-neue;
+    content: "\f411";
+    
+}
+
+.postListDelete::before{
+    font-family: genericons-neue;
+    content: "\f407";
+    
+}
+
 /* ======================================== */
 
 #accManage li{
     margin: 1em;
     list-style-type: none;
 }
+
