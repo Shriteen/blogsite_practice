@@ -20,7 +20,11 @@ const PostSchema= new Schema(
 	    commentorName: { type: String, required: true, minLength: 1 },
 	    commentContent: { type: String, required: true, minLength: 1 },
 	    commentTimestamp: { type: Date, required: true }
-	} ]
+	} ],
+	tags: [{
+	    type: Schema.Types.String,
+	    minLength: 1	    
+	}]
     },
     {
 	timestamps: {
