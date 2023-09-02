@@ -1,5 +1,6 @@
 //- Required args
   allAuthors : Array of author objects
+  allTags : Array of tag strings
   title: Title of page
 //- Optional args
   post : post object
@@ -15,6 +16,7 @@ html(lang="en")
     meta(name="viewport",content="width=device-width,initial-scale=1")
     link(href="/stylesheets/post_form.css", rel="stylesheet")
 
+    script(defer, src="/javascripts/postForm.js")
     script(defer).
       //- import editorjs from '/javascripts/editorjs-wrapper.js';
       import('/javascripts/editorjs-wrapper.js').then((module)=>{
@@ -65,6 +67,24 @@ html(lang="en")
             datalist#authorList
               each author in allAuthors
                 option(value=author.name)
+
+          li
+            button#tagsModalButton(type="button") Tags ▼
+            div#tagsModal
+              div#tagsModalHead
+                input#tagsInput(type="text",placeholder="Add some tags...",list="tagsDataList")
+                datalist#tagsDataList
+                  each tag in allTags
+                    option(value=tag)
+                input#tagsHiddenInput(type="hidden",name="tags")
+                button.close(type="button")
+              div#tagsModalBody
+                p#tagsNote Click on tags to remove
+                ul#tagsList
+                  if(post)
+                    each tag in post.tags
+                      li
+                        span.tag=tag
 
       div#errorList
         if errors

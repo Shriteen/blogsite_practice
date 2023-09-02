@@ -13,11 +13,17 @@ exports.dashboard= asyncHandler(async function(req,res){
 });
 
 exports.createPost= asyncHandler(async function(req,res){
-    const allAuthors= await Author.find().exec();
-    const admin=await Admin.findById(req.session.userid).exec();
+    
+    const [allAuthors, admin, allTags] = await Promise.all([
+	Author.find().exec(),
+	Admin.findById(req.session.userid).exec(),
+	Post.aggregate([{$unwind:'$tags'},{ "$group": { "_id": "$tags" }}])
+    ]);
+    
     res.render('post_form',{
 	title: 'Create Post',
 	allAuthors: allAuthors,
+	allTags: allTags.map(({ _id }) => _id),
 	author: admin.username
     });
 });
@@ -31,10 +37,21 @@ exports.createPostHandle= [
 	.trim()
 	.isLength({min: 1})
 	.escape(),
-    //assuming editorjs data is available and valid
+    body("tags","tags: Invalid JSON")
+	.optional()
+	.isJSON()
+	.bail()
+	.customSanitizer(tags=> JSON.parse(tags)),
+    body("tags.*","Empty tags are invalid")
+	.trim()
+	.isLength({min: 1})
+	.escape() ,
+    body("editorjs")
+	.notEmpty()
+	.withMessage('Editorjs data not found!'),
     asyncHandler(async function(req,res){
 	const errors= validationResult(req);
-
+	
 	let author;
 	if(req.body.author)
 	    //express-validator just lists errors, we handle the error
@@ -53,21 +70,27 @@ exports.createPostHandle= [
 	// Note that below does not need any checking as we don't save
 	// until we check for errors. Above code was also saving into
 	// the DB
-	const post= await new Post({
+	const post= await (await new Post({
 	    title: req.body.title,
 	    author: author._id,
 	    content: req.body.editorjs,
 	    editorAdmins: [ req.session.userid ], // When creating only one admin is relevant
-	    comments: []
-	}).populate("author");
+	    comments: [],
+	    tags: req.body.tags
+	})).populate("author");
 
 	if(!errors.isEmpty())
 	{
-	    const allAuthors= await Author.find().exec();
+	    const [allAuthors, allTags]= await Promise.all( [
+		Author.find().exec(),
+		Post.aggregate([{$unwind:'$tags'},{ "$group": { "_id": "$tags" }}])
+	    ]);
+	    
 	    res.render('post_form',{
 		title: 'Create Post',
 		allAuthors,
 		post,
+		allTags: allTags.map(({ _id }) => _id),
 		oldData: req.body.editorjs,
 		errors: errors.array()
 	    });
@@ -82,15 +105,17 @@ exports.createPostHandle= [
 
 exports.editPost= asyncHandler(async function(req,res){
     
-    const [post,allAuthors]= await Promise.all([
+    const [post,allAuthors,allTags]= await Promise.all([
 	Post.findById(req.params.postId).populate('author'),
-	Author.find().exec()
+	Author.find().exec(),
+	Post.aggregate([{$unwind:'$tags'},{ "$group": { "_id": "$tags" }}])
     ]);
 
     if(post) {
 	res.render('post_form',{
 	    title: 'Edit Post: '+ post.title ,
 	    allAuthors,
+	    allTags: allTags.map(({ _id }) => _id),
 	    post,
 	    oldData: post.content
 	});
@@ -109,7 +134,18 @@ exports.editPostHandle= [
 	.trim()
 	.isLength({min: 1})
 	.escape(),
-    //assuming editorjs data is available and valid
+    body("tags","tags: Invalid JSON")
+	.optional()
+	.isJSON()
+	.bail()
+	.customSanitizer(tags=> JSON.parse(tags)),
+    body("tags.*","Empty tags are invalid")
+	.trim()
+	.isLength({min: 1})
+	.escape() ,
+    body("editorjs")
+	.notEmpty()
+	.withMessage('Editorjs data not found!'),
     asyncHandler(async function(req,res){
 	const errors= validationResult(req);
 
@@ -128,7 +164,7 @@ exports.editPostHandle= [
 		});
 	}
 	
-	const post= (await Post.findById(req.params.postId).exec())?.populate("author");
+	const post= await (await Post.findById(req.params.postId))?.populate("author");
 	
 	if(post)
 	    // edit post form shouldn't allow invalid Id to be
@@ -140,10 +176,15 @@ exports.editPostHandle= [
 		post.author=author._id;
 		post.content=req.body.editorjs;
 		
-		const allAuthors= await Author.find().exec();
+		const [allAuthors, allTags]= await Promise.all( [
+		    Author.find().exec(),
+		    Post.aggregate([{$unwind:'$tags'},{ "$group": { "_id": "$tags" }}])
+		]);		
+		
 		res.render('post_form',{
 		    title: 'Edit Post: '+ post.title,
 		    allAuthors,
+		    allTags: allTags.map(({ _id }) => _id),
 		    post,
 		    oldData: req.body.editorjs,
 		    errors: errors.array()
@@ -158,6 +199,7 @@ exports.editPostHandle= [
 		    {
 			title: req.body.title,
 			author: author._id,
+			tags: req.body.tags,
 			content: req.body.editorjs,
 			$addToSet: { editorAdmins: [ req.session.userid ] }
 		    }

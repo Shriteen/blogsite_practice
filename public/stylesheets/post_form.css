@@ -24,7 +24,7 @@ header ul{
     padding: 0.4em;
 }
 
-header input {
+header :is(input,button) {
     appearance: none;
     border: none;
     font-size: 0.85em;
@@ -33,6 +33,72 @@ header input {
     background-color: #ddd;
     border-radius: 0.5em;
     height: 2.3em;
+}
+
+#tagsModalButton{
+    padding: 2px 10px ;
+}
+:is( #tagsModalButton,
+     #tagsModalHead .close
+   ):is( :hover,
+	 :focus ){
+    background-color: #ccc;
+}
+
+#tagsModal:not(.active){
+    display: none;
+}
+#tagsModal{
+    position: absolute;
+    right: 1em;
+    top: 60px;
+    z-index: 10000;
+    width: 15em;
+    box-shadow: 0 0 10px #aaa;
+    background-color: #eee;
+    padding: 0.75em;
+    border-radius: 0.75em;
+}
+
+#tagsModalHead{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#tagsModalHead .close{
+    padding: 0.25em 0.75em;
+    border-radius: 50%;
+}
+
+#tagsModal #tagsNote{
+    font-size: 0.7em;
+    color: rgba(0,0,0,0.5);
+    margin: 0.33em;
+}
+
+.close::after{
+    font-family: genericons-neue;
+    content: "\f406";
+}
+
+#tagsList{
+    justify-content: initial;
+}
+
+.tag{
+    font-size: 0.9em;
+    background-color: #3377ff;
+    color: white;
+    display: block;
+    margin: 0.1em;
+    padding: 0.2em 0.5em;
+    border-radius: 1em;
+    transition: 0.5s;
+}
+
+.tag:hover{
+    background-color: red;
+    cursor: pointer;
 }
 
 .backBtn a::before{
