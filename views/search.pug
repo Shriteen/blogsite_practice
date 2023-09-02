@@ -2,6 +2,7 @@
   results : array of results
   query : query object with passed parameters
   allAuthors: array of authors
+  allTags : Array of tag strings
 //- derived args (required)
   title: Title of tab
 
@@ -35,6 +36,14 @@ block bodyContent
           li
             label(for="toDate") To Date
             input#toDate(type="date",name="toDate",value=query.toDate)
+          li#tagsListItem
+            details#tagsWidget(open=query.tags.length>0)
+              summary Tags
+              fieldset#tags
+                each tag in allTags
+                  li
+                    input(type="checkbox", id=tag, name="tags", value=tag, checked=query.tags.indexOf(tag)!=-1 )
+                    label(for=tag)=tag
 
     div#postList
       if(results.length)

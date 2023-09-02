@@ -69,3 +69,47 @@
     border-bottom: 2px solid #6b90d7;;
     padding: 5px;
 }
+
+#tagsListItem{
+    width: 100%;
+}
+
+#tagsWidget summary::marker{
+    font-size: 1.5em;
+    color: #6b90d7;
+}
+
+#tagsWidget fieldset{
+    border-radius: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.8em;
+}
+
+#tagsWidget summary{
+    background-color: #eee;
+    padding: 0.4em;
+    margin-bottom: 0.4em;
+}
+details#tagsWidget[open] summary{
+    border-bottom: 2px solid #6b90d7;
+}
+
+#tags li{
+    margin: 1em 0.1em;
+}
+
+#tags label{
+    border: 2px solid #6b90d7;
+    font-size: 1.1em;
+    padding: 0.5em 1em;
+    border-radius: 1em;
+}
+#tags input[type='checkbox']:checked + label{
+    background-color: #6b90d7;
+    color: white;
+    font-weight: bold;
+}
+#tags input[type='checkbox']{
+    display: none;
+}

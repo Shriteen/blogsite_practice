@@ -25,13 +25,23 @@ exports.searchPage= asyncHandler(async function(req,res){
 	url: '/posts/search?'+ req.originalUrl.split("?")[1],
     });
 
-    const allAuthors= await Author.find();
+    const [allAuthors,allTags]= await Promise.all([
+	Author.find(),
+	Post.aggregate([{$unwind:'$tags'},{ "$group": { "_id": "$tags" }}])
+    ]);
+
+    if(req.query.tags){
+	if(!(Array.isArray(req.query.tags)))
+	    req.query.tags= [req.query.tags];
+    } else
+	req.query.tags= [];
     
     res.render('search',{
 	title: req.query.q+" at Blogsite",
 	results,
 	query: req.query,
-	allAuthors
+	allAuthors,
+	allTags: allTags.map(({ _id }) => _id)
     });
 });
 
