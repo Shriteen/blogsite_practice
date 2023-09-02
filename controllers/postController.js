@@ -40,6 +40,7 @@ exports.showPost= asyncHandler(async function(req,res){
   author : returns only the posts by this author
   fromDate : returns only the posts updated after this date
   toDate : returns only the posts updated before this date
+  tags: returns only the posts having the all the given tag(s)
  */
 exports.getPostAPI= asyncHandler(async function(req,res){
     let queryObj={};
@@ -93,6 +94,14 @@ exports.getPostAPI= asyncHandler(async function(req,res){
 	//case 0: just ignore
     }    
 
+    if(req.query.tags)
+    {
+	let tags=req.query.tags;
+	if(!(Array.isArray(tags)))
+	    tags=[tags];
+	queryObj["tags"]= { $all: tags };
+    }    
+    
     const results= await Post.find(
 	queryObj,
 	"title author createdOn lastEditedOn",
