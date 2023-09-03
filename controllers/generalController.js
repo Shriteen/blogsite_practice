@@ -35,9 +35,11 @@ exports.searchPage= asyncHandler(async function(req,res){
 	    req.query.tags= [req.query.tags];
     } else
 	req.query.tags= [];
+
     
+    const title= (req.query.q)? req.query.q+" at Blogsite": "Search results";
     res.render('search',{
-	title: req.query.q+" at Blogsite",
+	title,
 	results,
 	query: req.query,
 	allAuthors,
