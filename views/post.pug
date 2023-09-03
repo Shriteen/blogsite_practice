@@ -13,7 +13,13 @@ block headContent
 
 block bodyContent
   aside.sidebar
-    ul
+    ul#articleTags
+      each tag in post.tags
+        a(href="/posts/searchPage?tags="+tag)
+          li #{tag}
+
+    ul#recentPosts
+      h1 Recent articles
       each postObj in recentPosts
         li
           a(href=postObj.url) #{postObj.title}

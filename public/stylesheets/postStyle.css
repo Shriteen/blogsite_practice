@@ -46,10 +46,35 @@ aside{
     text-decoration: underline;
 }
 
-.sidebar a:visited{
+.sidebar a{
     color: #6b90d7;    
 }
 
+.sidebar h1{
+    font-size: 1.2em;
+    margin-bottom: 0;
+}
+
+#articleTags{
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 1em;
+    padding: 0;
+}
+
+#articleTags li{
+    margin: 0.1em;
+    border: 1px solid #6b90d7;
+    font-size: 0.9em;
+    padding: 0.2em 0.5em;
+    border-radius: 1em;
+    margin: 0.2em;
+}
+#articleTags li:hover{
+    background-color: #6b90d7;
+    color: white;
+}
 
 @media screen and (max-width:600px) {
     .sidebar {
