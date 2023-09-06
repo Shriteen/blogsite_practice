@@ -18,10 +18,22 @@ exports.showPost= asyncHandler(async function(req,res){
 	    .limit(10).exec()
     ]);
 
+    const similarPostsIds = await Post.aggregate([ { $unwind: '$tags' },
+						   { $match: { tags: { $in: post.tags } } },
+						   { $group: { _id: '$_id', count: { $count: {} } } },
+						   { $sort: { count: -1 } },
+						   { $limit: 4 }   ]); //we fetch 4, one of them is the post itself so we get 3 new
+    
+    const similarPosts = await Post.find({
+	$and: [ { _id: { $in: similarPostsIds }},
+		{ _id: { $ne: post._id }} ]
+    }, "title");
+    
     if(post) {
 	res.render("post",{
 	    title: post.title,
-	    recentPosts: allPosts, 
+	    recentPosts: allPosts,
+	    similarPosts,
 	    post,
 	    content: editorjsParseToHtml(post.content)
 	});

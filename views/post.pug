@@ -2,6 +2,7 @@
   post : post object
   content: post.content parsed into html
   recentPosts: array of recent 10 posts (title and url needed)
+  similarPosts: array of 3 similar articles based on tags
 //- derived args (required)
   title: Title of tab
 
@@ -23,6 +24,14 @@ block bodyContent
       each postObj in recentPosts
         li
           a(href=postObj.url) #{postObj.title}
+
+    ul#similarPosts
+      if(similarPosts.length)
+        h1 You might also like
+        each postObj in similarPosts
+          li
+            a(href=postObj.url) #{postObj.title}
+
 
   main
     article
